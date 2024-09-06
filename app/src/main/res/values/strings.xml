@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">prac1</string>
+    <string-array name="shape_options">
+        <item>Треугольник</item>
+        <item>Круг</item>
+    </string-array>
+</resources>
