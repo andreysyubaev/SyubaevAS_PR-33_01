@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 
@@ -14,7 +15,9 @@ class selectfigure : AppCompatActivity() {
 
     private lateinit var shapeSpinner: Spinner
     private lateinit var shapeImageView: ImageView
-    private lateinit var valueEditText: EditText
+    private lateinit var valueAEditText: EditText
+    private lateinit var valueBEditText: EditText
+    private lateinit var input_b_container: LinearLayout
     private lateinit var calculateButton: Button
     private var shapeImageResId: Int = R.drawable.triangle // Начальное изображение
 
@@ -24,19 +27,29 @@ class selectfigure : AppCompatActivity() {
 
         shapeSpinner = findViewById(R.id.shapeSpinner)
         shapeImageView = findViewById(R.id.shapeImageView)
-        valueEditText = findViewById(R.id.valueEditText)
+        valueAEditText = findViewById(R.id.valueAEditText)
+        valueBEditText = findViewById(R.id.valueBEditText)
+        input_b_container = findViewById(R.id.input_b_container)
         calculateButton = findViewById(R.id.calculateButton)
 
         shapeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
-                    0 -> {
+                    0 -> { // Треугольник
                         shapeImageView.setImageResource(R.drawable.triangle)
                         shapeImageResId = R.drawable.triangle
+                        input_b_container.visibility = View.VISIBLE
                     }
-                    1 -> {
+                    1 -> { // Круг
                         shapeImageView.setImageResource(R.drawable.circle)
                         shapeImageResId = R.drawable.circle
+                        input_b_container.visibility = View.GONE
+                    }
+
+                    1 -> { // Прямоугольник
+                        shapeImageView.setImageResource(R.drawable.circle)
+                        shapeImageResId = R.drawable.rectangle
+                        input_b_container.visibility = View.VISIBLE
                     }
                 }
             }
@@ -48,22 +61,42 @@ class selectfigure : AppCompatActivity() {
 
         calculateButton.setOnClickListener {
             val selectedShape = shapeSpinner.selectedItem.toString()
-            val value = valueEditText.text.toString().toDoubleOrNull()
+            val a = valueAEditText.text.toString().toDoubleOrNull()
+            val b = valueBEditText.text.toString().toDoubleOrNull()
 
-            if (value != null) {
+            if (a != null) {
                 val result1 = when (selectedShape) {
-                    "Треугольник" -> 2 * value + value // Пример расчета
-                    "Круг" -> value / (2 * Math.PI) // Пример расчета
+                    "Треугольник" -> {
+                        if (b != null) {
+                            2 * a + b
+                        } else {
+                            valueBEditText.error = "Введите значение b"
+                            return@setOnClickListener
+                        }
+                    }
+                    "Круг" -> a / (2 * Math.PI)
+                    "Прямоугольник" -> {
+                        if (b != null) {
+                            a * b
+                        } else {
+                            valueBEditText.error = "Введите значение b"
+                            return@setOnClickListener
+                        }
+                    }
                     else -> 0.0
                 }
 
+                // Округляем результат до сотых
+                val roundedResult = String.format("%.2f", result1)
+
+                // Переход на окно результатов
                 val intent = Intent(this, result::class.java)
                 intent.putExtra("shape", selectedShape)
-                intent.putExtra("result", result1.toString())
+                intent.putExtra("result", roundedResult)
                 intent.putExtra("imageResId", shapeImageResId) // Передаем ресурс изображения
                 startActivity(intent)
             } else {
-                valueEditText.error = "Введите корректное значение"
+                valueAEditText.error = "Введите корректное значение a"
             }
         }
     }

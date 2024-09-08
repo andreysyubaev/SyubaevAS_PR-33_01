@@ -3,5 +3,6 @@
     <string-array name="shape_options">
         <item>Треугольник</item>
         <item>Круг</item>
+        <item>Прямоугольник</item>
     </string-array>
 </resources>

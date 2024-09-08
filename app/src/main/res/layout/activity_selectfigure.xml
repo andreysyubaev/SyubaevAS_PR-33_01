@@ -38,7 +38,7 @@
         android:layout_marginBottom="35dp"
         android:background="@drawable/roundededittext"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/data1"
+        app:layout_constraintBottom_toTopOf="@+id/input_a_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -55,27 +55,47 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/data1"
+        android:id="@+id/input_a_container"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/roundededittext"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/calculateButton"
+        android:background="@drawable/roundededittext"
+        app:layout_constraintBottom_toTopOf="@+id/input_b_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/valueEditText"
+            android:id="@+id/valueAEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/roboto"
-            android:hint="Введите данные для расчета"
-            />
-
+            android:hint="Введите значение a" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/input_b_container"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:background="@drawable/roundededittext"
+        app:layout_constraintBottom_toTopOf="@+id/calculateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/valueBEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/roboto"
+            android:hint="Введите значение b" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/calculateButton"
